@@ -4,84 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PTV | Студия озвучки аниме</title>
-    <style>
-        /* Стили для красивого отображения */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-            color: #333;
-        }
-        header {
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        .logo {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin: 0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        .anime-card {
-            display: flex;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            margin-bottom: 30px;
-        }
-        .anime-poster {
-            width: 300px;
-            height: auto;
-            object-fit: cover;
-        }
-        .anime-info {
-            padding: 20px;
-        }
-        .anime-title {
-            font-size: 1.8em;
-            margin-top: 0;
-            color: #2c3e50;
-        }
-        .anime-meta {
-            line-height: 1.6;
-        }
-        .anime-meta strong {
-            color: #e74c3c;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css"> <!-- Если используете отдельный CSS-файл -->
 </head>
 <body>
     <!-- Шапка сайта -->
     <header>
-        <h1 class="logo">PTV</h1>
-        <p>Студия профессиональной озвучки аниме</p>
+        <div class="header-container">
+            <a href="/" class="logo">PTV</a>
+            <nav class="nav-menu">
+                <a href="#">Главная</a>
+                <a href="#">Проекты</a>
+                <a href="#">Контакты</a>
+            </nav>
+        </div>
     </header>
 
     <!-- Основной контент -->
     <div class="container">
         <div class="anime-card">
-            <!-- Постер аниме (замените ссылку на реальное изображение) -->
-            <img src="https://via.placeholder.com/300x450" alt="Необъятный океан" class="anime-poster">
-            
-            <!-- Информация об аниме -->
+            <img src="poster.jpg" alt="Необъятный океан" class="anime-poster">
             <div class="anime-info">
                 <h2 class="anime-title">Необъятный океан</h2>
                 <div class="anime-meta">
                     <p><strong>Год выпуска:</strong> 2023</p>
                     <p><strong>Страна:</strong> Япония</p>
-                    <p><strong>Жанр:</strong> Драма, Фэнтези, Приключения</p>
-                    <p><strong>Озвучка:</strong> PTV (полная)</p>
+                    <p><strong>Жанр:</strong> Драма, Фэнтези</p>
+                    <p><strong>Озвучка:</strong> PTV</p>
                     <p><strong>Серии:</strong> 12/12</p>
                 </div>
-                <p>Описание: История о путешествии через бескрайние морские просторы, где герои сталкиваются с загадками древних цивилизаций и собственными демонами.</p>
+                <p class="anime-description">
+                    История о путешествии через бескрайние морские просторы, где герои сталкиваются с загадками древних цивилизаций...
+                </p>
             </div>
         </div>
     </div>
