@@ -1,0 +1,142 @@
+:root {
+    --bg-color: #0f0e17;
+    --primary-color: #6c63ff;
+    --text-color: #ffffff;
+    --card-bg: #1e1d2b;
+    --hover-effect: rgba(108, 99, 255, 0.3);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+/* Шапка сайта */
+header {
+    background-color: var(--card-bg);
+    padding: 15px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 2em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 0;
+    text-decoration: none;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-menu a {
+    color: var(--text-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-menu a:hover {
+    color: var(--primary-color);
+}
+
+/* Основной контент */
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 20px;
+}
+
+/* Карточка аниме (вертикальное расположение) */
+.anime-card {
+    display: flex;
+    background-color: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px; /* Увеличиваем отступ между карточками */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.anime-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px var(--hover-effect);
+}
+
+.anime-poster {
+    width: 220px;
+    height: 320px;
+    object-fit: cover;
+}
+
+.anime-info {
+    padding: 20px;
+    flex: 1;
+}
+
+.anime-title {
+    font-size: 1.5em;
+    margin-top: 0;
+    color: var(--primary-color);
+}
+
+.anime-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 15px 0;
+}
+
+.anime-meta p {
+    margin: 0;
+    font-size: 0.95em;
+}
+
+.anime-meta strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.anime-description {
+    color: #b8b8b8;
+    font-size: 0.9em;
+}
+
+/* Подвал */
+footer {
+    background-color: var(--card-bg);
+    padding: 20px 0;
+    text-align: center;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .anime-card {
+        flex-direction: column;
+    }
+    .anime-poster {
+        width: 100%;
+        height: auto;
+    }
+}
