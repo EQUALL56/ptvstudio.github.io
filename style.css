@@ -5,6 +5,13 @@
     --card-bg: #1e1d2b;
     --hover-effect: rgba(108, 99, 255, 0.3);
 }
+.anime-title a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+.anime-title a:hover {
+    text-decoration: underline;
+}
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
