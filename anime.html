@@ -10,6 +10,7 @@
             --primary-color: #6c63ff;
             --text-color: #ffffff;
             --card-bg: #1e1d2b;
+            --hover-effect: rgba(108, 99, 255, 0.3);
         }
         
         body {
@@ -25,6 +26,9 @@
             background-color: var(--card-bg);
             padding: 15px 0;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .header-container {
@@ -44,22 +48,44 @@
             text-decoration: none;
         }
         
+        .nav-menu {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav-menu a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-weight: 500;
+            font-size: 1.1em;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
         .container {
             max-width: 1200px;
             margin: 20px auto;
             padding: 0 20px;
         }
         
-        .anime-title {
-            font-size: 2.5em;
-            color: var(--primary-color);
-            margin-bottom: 10px;
+        .anime-header {
+            margin-bottom: 30px;
         }
         
-        .foreign-title {
+        .anime-main-title {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .anime-foreign-title {
             font-size: 1.2em;
             color: #b8b8b8;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
         .content-section {
@@ -80,8 +106,8 @@
             color: var(--primary-color);
             margin-top: 0;
             margin-bottom: 20px;
-            border-bottom: 2px solid var(--primary-color);
             padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
         }
         
         .anime-poster {
@@ -116,15 +142,21 @@
             font-weight: bold;
             color: var(--primary-color);
         }
+        
+        @media (max-width: 768px) {
+            .content-section {
+                flex-direction: column;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Шапка сайта -->
     <header>
         <div class="header-container">
-            <a href="/" class="logo">PTV STUDIO</a>
+            <a href="index.html" class="logo">PTV STUDIO</a>
             <nav class="nav-menu">
-                <a href="#">Главная</a>
+                <a href="index.html">Главная</a>
                 <a href="#">Каталог</a>
                 <a href="#">О нас</a>
             </nav>
@@ -133,8 +165,10 @@
 
     <!-- Основной контент -->
     <div class="container">
-        <h1 class="anime-title">Необъятный океан</h1>
-        <div class="foreign-title">Fathomless Ocean / 無限の海</div>
+        <div class="anime-header">
+            <h1 class="anime-main-title">Необъятный океан</h1>
+            <div class="anime-foreign-title">Fathomless Ocean / 無限の海</div>
+        </div>
         
         <div class="content-section">
             <!-- Постер и информация -->
