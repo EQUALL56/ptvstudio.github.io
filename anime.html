@@ -3,175 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Необъятный океан | PTV STUDIO</title>
-    <style>
-        :root {
-            --bg-color: #0f0e17;
-            --primary-color: #6c63ff;
-            --text-color: #ffffff;
-            --card-bg: #1e1d2b;
-            --hover-effect: rgba(108, 99, 255, 0.3);
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        
-        header {
-            background-color: var(--card-bg);
-            padding: 15px 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-        
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-        
-        .logo {
-            font-size: 2em;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin: 0;
-            text-decoration: none;
-        }
-        
-        .nav-menu {
-            display: flex;
-            gap: 25px;
-        }
-        
-        .nav-menu a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-size: 1.1em;
-            font-weight: 500;
-            padding: 5px 0;
-            position: relative;
-        }
-        
-        .nav-menu a:hover {
-            text-decoration: underline;
-            text-underline-offset: 5px;
-        }
-        
-        .nav-menu a::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--primary-color);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-        
-        .nav-menu a:hover::after {
-            transform: scaleX(1);
-        }
-        
-        /* Остальные стили остаются без изменений */
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-        
-        .anime-header {
-            margin-bottom: 30px;
-        }
-        
-        .anime-main-title {
-            font-size: 2.5em;
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-        
-        .anime-foreign-title {
-            font-size: 1.2em;
-            color: #b8b8b8;
-            margin-bottom: 20px;
-        }
-        
-        .content-section {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        
-        .poster-section, .player-section {
-            flex: 1;
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            padding: 20px;
-        }
-        
-        .section-title {
-            font-size: 1.5em;
-            color: var(--primary-color);
-            margin-top: 0;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid var(--primary-color);
-        }
-        
-        .anime-poster {
-            width: 100%;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        
-        .video-player {
-            width: 100%;
-            height: 400px;
-            background-color: #000;
-            border-radius: 5px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        
-        .info-item {
-            margin-bottom: 10px;
-        }
-        
-        .info-label {
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        
-        @media (max-width: 768px) {
-            .content-section {
-                flex-direction: column;
-            }
-            
-            .nav-menu {
-                gap: 15px;
-            }
-        }
-    </style>
+    <title>Необъятный океан | PTV STUDIO</title><link rel="stylesheet" href="styly.css">
+    
 </head>
+
 <body>
     <!-- Шапка сайта -->
     <header>
@@ -197,7 +32,7 @@
             <!-- Постер и информация -->
             <div class="poster-section">
                 <h2 class="section-title">ПОСТЕР</h2>
-                <img src="images/poster-large.jpg" alt="Необъятный океан" class="anime-poster">
+                <img src="bluesea.png" alt="Необъятный океан" class="anime-poster">
                 
                 <div class="info-grid">
                     <div class="info-item">
@@ -213,7 +48,7 @@
                         <span class="info-label">В списках:</span> Топ-100 аниме
                     </div>
                     <div class="info-item">
-                        <span class="info-label">Слоган:</span> "Путешествие, которое изменит всё"
+                        <span class="info-label">Слоган:</span> "ХУЛИ ТЫ БЕЖИШЬ"
                     </div>
                     <div class="info-item">
                         <span class="info-label">Дата выхода:</span> 12 октября 2023
@@ -228,7 +63,7 @@
                         <span class="info-label">Жанр:</span> Фэнтези, Приключения, Драма
                     </div>
                     <div class="info-item">
-                        <span class="info-label">Возраст:</span> 16+
+                        <span class="info-label">Возраст:</span> 18+
                     </div>
                     <div class="info-item">
                         <span class="info-label">Время:</span> 24 мин. × 12 серий
@@ -243,39 +78,6 @@
                     [Здесь будет видеоплеер]
                 </div>
                 
-                <div class="info-grid">
-                    <div class="info-item">
-                        <span class="info-label">IMDb:</span> 8.7/10
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Кинопоиск:</span> 8.5/10
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">World Art:</span> 8.9/10
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">В списках:</span> Топ-100 аниме
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Слоган:</span> "Путешествие, которое изменит всё"
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Дата выхода:</span> 12 октября 2023
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Страна:</span> Япония
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Режиссер:</span> Хаяо Миядзаки
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Жанр:</span> Фэнтези, Приключения, Драма
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Возраст:</span> 16+
-                    </div>
-                    <div class="info-item">
-                        <span class="info-label">Время:</span> 24 мин. × 12 серий
                     </div>
                 </div>
             </div>
