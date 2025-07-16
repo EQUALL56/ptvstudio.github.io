@@ -77,8 +77,7 @@
     <header>
         <div class="header-container">
             <div class="logo-container">
-              
-              <a href="index.html" class="logo">PTV STUDIO</a>
+                <a href="index.html" class="logo">PTV STUDIO</a>
             </div>
             <nav class="nav-menu">
                 <a href="index.html">Главная</a>
@@ -142,20 +141,17 @@
             <div class="player-section">
                 <h2 class="section-title">ПЛЕЕР</h2>
                 <div class="video-player">
-                    <!-- Основной плеер, который будет показывать выбранную серию -->
-                    <video id="mainPlayer" controls playsinline>
-                        <source src="grandblueep1.mp4" type="video/mp4">
-                        Ваш браузер не поддерживает HTML5 видео.
-                    </video>
+                    <div id="youtubePlayerContainer">
+                        <iframe id="youtubePlayer" 
+                                frameborder="0"
+                                allowfullscreen
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
+                        </iframe>
+                    </div>
                 </div>
                 
                 <!-- Список серий -->
                 <div class="episodes-list" id="episodesContainer">
-                    <!-- Будет заполнено JavaScript -->
-                </div>
-                
-                <!-- Скрытые плееры для всех серий -->
-                <div id="hiddenPlayers" class="hidden">
                     <!-- Будет заполнено JavaScript -->
                 </div>
             </div>
@@ -163,67 +159,51 @@
     </div>
 
     <script>
+        // Данные о сериях (замените youtubeId на реальные ID видео)
+        const episodesData = [
+            { id: 1, youtubeId: "https://youtu.be/HGJyuR32jHY9WgXcQ" },
+            { id: 2, youtubeId: "dQw4w9WgXcQ" },
+            { id: 3, youtubeId: "dQw4w9WgXcQ" },
+            { id: 4, youtubeId: "dQw4w9WgXcQ" },
+            { id: 5, youtubeId: "dQw4w9WgXcQ" },
+            { id: 6, youtubeId: "dQw4w9WgXcQ" },
+            { id: 7, youtubeId: "dQw4w9WgXcQ" },
+            { id: 8, youtubeId: "dQw4w9WgXcQ" },
+            { id: 9, youtubeId: "dQw4w9WgXcQ" },
+            { id: 10, youtubeId: "dQw4w9WgXcQ" },
+            { id: 11, youtubeId: "dQw4w9WgXcQ" },
+            { id: 12, youtubeId: "dQw4w9WgXcQ" }
+        ];
+
         document.addEventListener('DOMContentLoaded', function() {
             const episodesContainer = document.getElementById('episodesContainer');
-            const hiddenPlayers = document.getElementById('hiddenPlayers');
-            const mainPlayer = document.getElementById('mainPlayer');
-            const totalEpisodes = 12;
+            const youtubePlayer = document.getElementById('youtubePlayer');
             
-            // Создаем кнопки серий и плееры
-            for (let i = 1; i <= totalEpisodes; i++) {
-                // Создаем кнопку серии
-                const episodeBtn = document.createElement('button');
-                episodeBtn.className = 'episode-btn';
-                episodeBtn.textContent = i;
-                episodeBtn.dataset.episode = i;
+            // Создаем кнопки серий
+            episodesData.forEach(episode => {
+                const btn = document.createElement('button');
+                btn.className = 'episode-btn';
+                btn.textContent = episode.id;
+                btn.dataset.episode = episode.id;
                 
-                // Делаем первую серию активной по умолчанию
-                if (i === 1) {
-                    episodeBtn.classList.add('active');
-                }
-                
-                // Добавляем обработчик клика
-                episodeBtn.addEventListener('click', function() {
-                    // Убираем активный класс у всех кнопок
-                    document.querySelectorAll('.episode-btn').forEach(btn => {
-                        btn.classList.remove('active');
+                btn.addEventListener('click', function() {
+                    // Удаляем активный класс у всех кнопок
+                    document.querySelectorAll('.episode-btn').forEach(b => {
+                        b.classList.remove('active');
                     });
-                    
                     // Добавляем активный класс текущей кнопке
                     this.classList.add('active');
-                    
-                    // Меняем источник видео в основном плеере
-                    changeVideoSource(i);
+                    // Загружаем видео
+                    youtubePlayer.src = `https://www.youtube.com/embed/${episode.youtubeId}?autoplay=1`;
                 });
                 
-                episodesContainer.appendChild(episodeBtn);
-                
-                // Создаем скрытый плеер для серии
-                const player = document.createElement('video');
-                player.id = `player${i}`;
-                player.controls = true;
-                player.playsinline = true;
-                player.className = 'hidden';
-                player.innerHTML = `
-                    <source src="grandblueep${i}.mp4" type="video/mp4">
-                    Ваш браузер не поддерживает HTML5 видео.
-                `;
-                
-                hiddenPlayers.appendChild(player);
-            }
+                episodesContainer.appendChild(btn);
+            });
             
-            // Функция для изменения источника видео
-            function changeVideoSource(episodeNum) {
-                const sources = mainPlayer.querySelectorAll('source');
-                
-                // Меняем источники
-                sources[0].src = `grandblueep${episodeNum}.mp4`;
-                
-                // Перезагружаем плеер
-                mainPlayer.load();
-                
-                // Если нужно автоматическое воспроизведение
-                // mainPlayer.play().catch(e => console.log("Autoplay prevented"));
+            // Автоматически загружаем первую серию
+            if (episodesData.length > 0) {
+                const firstBtn = episodesContainer.querySelector('.episode-btn');
+                if (firstBtn) firstBtn.click();
             }
         });
     </script>
