@@ -34,7 +34,7 @@
         }
         
         .logo {
-            font-size: 2em;
+            font-size: 3em;
             font-weight: bold;
             color: var(--primary-color);
             margin: 0;
@@ -153,3 +153,11 @@
             font-weight: bold;
             color: var(--primary-color);
         }
+        .logo {
+    font-family: 'House Holiday Sans Cyrillic', sans-serif;
+    /* Дополнительные стили, если нужно */
+    font-size: 50px; /* Пример размера */
+    font-weight: normal;
+    text-decoration: none;
+    color: #6c63ff; /* Пример цвета */
+}
