@@ -3,15 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Необъятный океан | PTV STUDIO</title><link rel="stylesheet" href="styly.css">
-    
+    <title>Необъятный океан | PTV STUDIO</title>
+    <link rel="stylesheet" href="styly.css">
+    <style>
+        /* Стили для списка серий */
+        .episodes-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        @font-face {
+    font-family: 'House Holiday Sans Cyrillic';
+    src: url('fonts/HouseHolidaySansCyrillic.woff2') format('woff2'),
+         url('fonts/HouseHolidaySansCyrillic.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+        .episode-btn {
+            width: 50px;
+            height: 30px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        
+        .episode-btn:hover {
+            background: #555;
+        }
+        
+        .episode-btn.active {
+            background: #6c63ff;
+        }
+        
+        /* Стиль для скрытых плееров */
+        .hidden {
+            display: none;
+        }
+        /* Фиксированный размер плеера */
+        .video-player {
+            width: 100%;
+            max-width: 800px; /* Можно регулировать */
+            margin: 0 auto;
+        }
+        
+        #mainPlayer {
+            width: 100%;
+            height: auto;
+            background: #000;
+        }
+        .logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-image {
+    height: 10px;
+    width: auto;
+}
+    </style>
 </head>
 
 <body>
     <!-- Шапка сайта -->
     <header>
         <div class="header-container">
-            <a href="index.html" class="logo">PTV STUDIO</a>
+            <div class="logo-container">
+              
+              <a href="index.html" class="logo">PTV STUDIO</a>
+            </div>
             <nav class="nav-menu">
                 <a href="index.html">Главная</a>
                 <a href="#">Каталог</a>
@@ -27,7 +95,6 @@
             <div class="anime-foreign-title">Fathomless Ocean / 無限の海</div>
         </div>
         
-        <!-- Остальное содержимое страницы остается без изменений -->
         <div class="content-section">
             <!-- Постер и информация -->
             <div class="poster-section">
@@ -51,7 +118,7 @@
                         <span class="info-label">Слоган:</span> "ХУЛИ ТЫ БЕЖИШЬ"
                     </div>
                     <div class="info-item">
-                        <span class="info-label">Дата выхода:</span> 12 октября 2023
+                        <span class="info-label">Дата выхода:</span> 14 июля 2018 года
                     </div>
                     <div class="info-item">
                         <span class="info-label">Страна:</span> Япония
@@ -60,7 +127,7 @@
                         <span class="info-label">Режиссер:</span> Хаяо Миядзаки
                     </div>
                     <div class="info-item">
-                        <span class="info-label">Жанр:</span> Фэнтези, Приключения, Драма
+                        <span class="info-label">Жанр:</span> Приключения, Комедии, Драмы, Повседневность, Сёнэн, Этти
                     </div>
                     <div class="info-item">
                         <span class="info-label">Возраст:</span> 18+
@@ -75,13 +142,90 @@
             <div class="player-section">
                 <h2 class="section-title">ПЛЕЕР</h2>
                 <div class="video-player">
-                    [Здесь будет видеоплеер]
+                    <!-- Основной плеер, который будет показывать выбранную серию -->
+                    <video id="mainPlayer" controls playsinline>
+                        <source src="grandblueep1.mp4" type="video/mp4">
+                        Ваш браузер не поддерживает HTML5 видео.
+                    </video>
                 </div>
                 
-                    </div>
+                <!-- Список серий -->
+                <div class="episodes-list" id="episodesContainer">
+                    <!-- Будет заполнено JavaScript -->
+                </div>
+                
+                <!-- Скрытые плееры для всех серий -->
+                <div id="hiddenPlayers" class="hidden">
+                    <!-- Будет заполнено JavaScript -->
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const episodesContainer = document.getElementById('episodesContainer');
+            const hiddenPlayers = document.getElementById('hiddenPlayers');
+            const mainPlayer = document.getElementById('mainPlayer');
+            const totalEpisodes = 12;
+            
+            // Создаем кнопки серий и плееры
+            for (let i = 1; i <= totalEpisodes; i++) {
+                // Создаем кнопку серии
+                const episodeBtn = document.createElement('button');
+                episodeBtn.className = 'episode-btn';
+                episodeBtn.textContent = i;
+                episodeBtn.dataset.episode = i;
+                
+                // Делаем первую серию активной по умолчанию
+                if (i === 1) {
+                    episodeBtn.classList.add('active');
+                }
+                
+                // Добавляем обработчик клика
+                episodeBtn.addEventListener('click', function() {
+                    // Убираем активный класс у всех кнопок
+                    document.querySelectorAll('.episode-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Добавляем активный класс текущей кнопке
+                    this.classList.add('active');
+                    
+                    // Меняем источник видео в основном плеере
+                    changeVideoSource(i);
+                });
+                
+                episodesContainer.appendChild(episodeBtn);
+                
+                // Создаем скрытый плеер для серии
+                const player = document.createElement('video');
+                player.id = `player${i}`;
+                player.controls = true;
+                player.playsinline = true;
+                player.className = 'hidden';
+                player.innerHTML = `
+                    <source src="grandblueep${i}.mp4" type="video/mp4">
+                    Ваш браузер не поддерживает HTML5 видео.
+                `;
+                
+                hiddenPlayers.appendChild(player);
+            }
+            
+            // Функция для изменения источника видео
+            function changeVideoSource(episodeNum) {
+                const sources = mainPlayer.querySelectorAll('source');
+                
+                // Меняем источники
+                sources[0].src = `grandblueep${episodeNum}.mp4`;
+                
+                // Перезагружаем плеер
+                mainPlayer.load();
+                
+                // Если нужно автоматическое воспроизведение
+                // mainPlayer.play().catch(e => console.log("Autoplay prevented"));
+            }
+        });
+    </script>
 </body>
 </html>
