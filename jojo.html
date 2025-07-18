@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Необъятный океан | PTV STUDIO</title>
+    <link rel="stylesheet" href="styly.css">
+    <style>
+        /* Стили для списка серий */
+        .episodes-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        @font-face {
+            font-family: 'House Holiday Sans Cyrillic';
+            src: url('fonts/HouseHolidaySansCyrillic.woff2') format('woff2'),
+                 url('fonts/HouseHolidaySansCyrillic.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
+        .episode-btn {
+            width: 50px;
+            height: 30px;
+            background: #333;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+        
+        .episode-btn:hover {
+            background: #555;
+        }
+        
+        .episode-btn.active {
+            background: #6c63ff;
+        }
+        
+        /* Стили для видео-плеера */
+        .video-player {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 соотношение */
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-error {
+            color: #ff6b6b;
+            padding: 15px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 5px;
+            display: none;
+            margin-top: 10px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Шапка сайта -->
+    <header>
+        <div class="header-container">
+            <div class="logo-container">
+                <a href="index.html" class="logo">PTV STUDIO</a>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html">Главная</a>
+                <a href="#">Каталог</a>
+                <a href="about.html">О нас</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Основной контент -->
+    <div class="container">
+        <div class="anime-header">
+            <h1 class="anime-main-title">Необъятный океан</h1>
+            <div class="anime-foreign-title">Grand Blue / ぐらんぶる</div>
+        </div>
+        
+        <div class="content-section">
+            <!-- Постер и информация -->
+            <div class="poster-section">
+                <h2 class="section-title">ПОСТЕР</h2>
+                <img src="bluesea.png" alt="Необъятный океан" class="anime-poster">
+                
+                <div class="info-grid">
+                    <div class="info-item">
+                        <span class="info-label">IMDb:</span> 8.7/10
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Кинопоиск:</span> 8.5/10
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">World Art:</span> 8.9/10
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">В списках:</span> Топ-100 аниме
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Слоган:</span> "ХУЛИ ТЫ БЕЖИШЬ"
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Дата выхода:</span> 14 июля 2018 года
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Страна:</span> Япония
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Режиссер:</span> Хаяо Миядзаки
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Жанр:</span> Приключения, Комедии, Драмы, Повседневность, Сёнэн, Этти
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Возраст:</span> 18+
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Время:</span> 24 мин. × 12 серий
+                    </div>
+                </div>
+            </div>
+            
+            <div class="player-section">
+                <h2>ПЛЕЕР</h2>
+                <div class="video-container">
+                    <!-- Изменено: теперь используем Google Drive плеер -->
+                    <iframe id="googleDrivePlayer"
+                            src=""
+                            allow="autoplay; fullscreen"
+                            allowfullscreen>
+                    </iframe>
+                </div>
+                <div id="videoError" class="video-error"></div>
+                
+                <div class="episodes-list" id="episodesContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные о сериях с ID файлов на Google Диске
+         const episodesData = [
+            { 
+                id: 1, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },
+            { 
+                id: 2, 
+                driveId: "1EXAMPLEFILEID2", // Замените на реальный ID файла
+                name: "Серия 2" 
+            },
+            { 
+                id: 3, 
+                driveId: "1EXAMPLEFILEID3", // Замените на реальный ID файла
+                name: "Серия 3" 
+            },
+            { 
+                id: 4, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },
+        { 
+                id: 5, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },{ 
+                id: 6, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },{ 
+                id: 7, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },{ 
+                id: 8, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },{ 
+                id: 9, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },{ 
+                id: 10, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },{ 
+                id: 11, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },{ 
+                id: 12, 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },
+        ];
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const player = document.getElementById('googleDrivePlayer');
+            const episodesContainer = document.getElementById('episodesContainer');
+            const errorDisplay = document.getElementById('videoError');
+
+            // Создаем кнопки для каждой серии
+            episodesData.forEach(episode => {
+                const btn = document.createElement('button');
+                btn.className = 'episode-btn';
+                btn.textContent = episode.id;
+                
+                btn.addEventListener('click', () => {
+                    // Убираем активный класс у всех кнопок
+                    document.querySelectorAll('.episode-btn').forEach(b => {
+                        b.classList.remove('active');
+                    });
+                    
+                    // Добавляем активный класс текущей кнопке
+                    btn.classList.add('active');
+                    
+                    // Загружаем видео с Google Диска
+                    loadGoogleDriveVideo(episode.driveId);
+                });
+                
+                episodesContainer.appendChild(btn);
+            });
+
+            // Функция загрузки видео с Google Диска
+            function loadGoogleDriveVideo(fileId) {
+                errorDisplay.style.display = 'none';
+                
+                // Формируем URL для встраивания видео с Google Диска
+                const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                
+                player.src = embedUrl;
+                
+                // Обработчик ошибок
+                player.addEventListener('error', () => {
+                    errorDisplay.textContent = 'Ошибка загрузки видео. Проверьте доступ к файлу.';
+                    errorDisplay.style.display = 'block';
+                });
+            }
+
+            // Автозагрузка первой серии
+            if (episodesData.length > 0) {
+                episodesContainer.querySelector('.episode-btn').click();
+            }
+        });
+    </script>
+</body>
+</html>
