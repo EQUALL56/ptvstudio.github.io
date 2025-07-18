@@ -46,6 +46,7 @@
         }
         
         /* Стили для видео-плеера */
+        
         .video-player {
             width: 100%;
             max-width: 800px;
@@ -82,6 +83,99 @@
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+        
+        /* Стили для раздела комментариев */
+        .comments-section {
+            margin-top: 40px;
+            padding: 20px;
+            background: #1e1d2b;
+            border-radius: 8px;
+        }
+        
+        .comments-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #636cff;
+        }
+        
+        .comment-form {
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input, 
+        .form-group textarea {
+            width: 98%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: #636cff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .submit-btn:hover {
+            background: #5a52d6;
+        }
+        
+        .comments-list {
+            margin-top: 20px;
+        }
+        
+        .comment {
+            background: 5a52d6;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .comment-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .comment-author {
+            color: #6c63ff;
+        }
+        
+        .comment-date {
+            color: #777;
+            font-size: 0.9em;
+        }
+        
+        .comment-text {
+            line-height: 1.5;
+        }
+        
+        .no-comments {
+            color: #777;
+            font-style: italic;
         }
     </style>
 </head>
@@ -152,7 +246,7 @@
             </div>
             
             <div class="player-section">
-                <h2>ПЛЕЕР</h2>
+                <h2 class="player_text">ПЛЕЕР</h2>
                 <div class="video-container">
                     <!-- Изменено: теперь используем Google Drive плеер -->
                     <iframe id="googleDrivePlayer"
@@ -164,6 +258,32 @@
                 <div id="videoError" class="video-error"></div>
                 
                 <div class="episodes-list" id="episodesContainer"></div>
+            </div>
+        </div>
+        
+        <!-- Раздел комментариев -->
+        <div class="comments-section">
+            <h2 class="comments-title">Отзывы о аниме</h2>
+            
+            <!-- Форма для добавления комментария -->
+            <div class="comment-form">
+                <form id="commentForm">
+                    <div class="form-group">
+                        <label for="commentName">Ваше имя:</label>
+                        <input type="text" id="commentName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="commentText">Ваш отзыв:</label>
+                        <textarea id="commentText" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Оставить отзыв</button>
+                </form>
+            </div>
+            
+            <!-- Список комментариев -->
+            <div class="comments-list" id="commentsList">
+                <!-- Комментарии будут загружаться здесь -->
+                <p class="no-comments">Пока нет отзывов. Будьте первым!</p>
             </div>
         </div>
     </div>
@@ -226,11 +346,16 @@
             },
         ];
 
-
         document.addEventListener('DOMContentLoaded', function() {
             const player = document.getElementById('googleDrivePlayer');
             const episodesContainer = document.getElementById('episodesContainer');
             const errorDisplay = document.getElementById('videoError');
+            
+            // Элементы для работы с комментариями
+            const commentForm = document.getElementById('commentForm');
+            const commentsList = document.getElementById('commentsList');
+            const commentName = document.getElementById('commentName');
+            const commentText = document.getElementById('commentText');
 
             // Создаем кнопки для каждой серии
             episodesData.forEach(episode => {
@@ -273,6 +398,94 @@
             // Автозагрузка первой серии
             if (episodesData.length > 0) {
                 episodesContainer.querySelector('.episode-btn').click();
+            }
+            
+            // Работа с комментариями
+            
+            // Загрузка комментариев при загрузке страницы
+            loadComments();
+            
+            // Обработчик отправки формы комментария
+            commentForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = commentName.value.trim();
+                const text = commentText.value.trim();
+                
+                if (name && text) {
+                    addComment(name, text);
+                    
+                    // Очищаем поля формы
+                    commentName.value = '';
+                    commentText.value = '';
+                }
+            });
+            
+            // Функция добавления комментария
+            function addComment(name, text) {
+                const comment = {
+                    id: Date.now(), // Используем timestamp как уникальный ID
+                    name: name,
+                    text: text,
+                    date: new Date().toLocaleString()
+                };
+                
+                // Получаем текущие комментарии из localStorage
+                let comments = JSON.parse(localStorage.getItem('animeComments')) || [];
+                
+                // Добавляем новый комментарий
+                comments.unshift(comment); // Добавляем в начало массива
+                
+                // Сохраняем обратно в localStorage
+                localStorage.setItem('animeComments', JSON.stringify(comments));
+                
+                // Обновляем отображение комментариев
+                loadComments();
+            }
+            
+            // Функция загрузки комментариев
+            function loadComments() {
+                const comments = JSON.parse(localStorage.getItem('animeComments')) || [];
+                
+                // Очищаем список комментариев
+                commentsList.innerHTML = '';
+                
+                if (comments.length === 0) {
+                    // Если комментариев нет, показываем сообщение
+                    const noComments = document.createElement('p');
+                    noComments.className = 'no-comments';
+                    noComments.textContent = 'Пока нет отзывов. Будьте первым!';
+                    commentsList.appendChild(noComments);
+                } else {
+                    // Добавляем каждый комментарий в список
+                    comments.forEach(comment => {
+                        const commentElement = document.createElement('div');
+                        commentElement.className = 'comment';
+                        
+                        const commentHeader = document.createElement('div');
+                        commentHeader.className = 'comment-header';
+                        
+                        const authorSpan = document.createElement('span');
+                        authorSpan.className = 'comment-author';
+                        authorSpan.textContent = comment.name;
+                        
+                        const dateSpan = document.createElement('span');
+                        dateSpan.className = 'comment-date';
+                        dateSpan.textContent = comment.date;
+                        
+                        commentHeader.appendChild(authorSpan);
+                        commentHeader.appendChild(dateSpan);
+                        
+                        const commentText = document.createElement('div');
+                        commentText.className = 'comment-text';
+                        commentText.textContent = comment.text;
+                        
+                        commentElement.appendChild(commentHeader);
+                        commentElement.appendChild(commentText);
+                        
+                        commentsList.appendChild(commentElement);
+                    });
+                }
             }
         });
     </script>
