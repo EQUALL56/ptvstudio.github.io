@@ -53,14 +53,12 @@
             font-weight: 500;
             padding: 5px 0;
             position: relative;
-        }
+            transition:color 0.3s;}
         
         .nav-menu a:hover {
-            text-decoration: underline;
-            text-underline-offset: 5px;
-        }
+            color: var(--primary-color);}
         
-        .nav-menu a::after {
+        .nav-menu a::afte {
             content: '';
             position: absolute;
             width: 100%;
