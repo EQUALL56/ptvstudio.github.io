@@ -13,14 +13,16 @@
             gap: 10px;
             margin-top: 15px;
         }
+        
         @font-face {
-    font-family: 'House Holiday Sans Cyrillic';
-    src: url('fonts/HouseHolidaySansCyrillic.woff2') format('woff2'),
-         url('fonts/HouseHolidaySansCyrillic.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
+            font-family: 'House Holiday Sans Cyrillic';
+            src: url('fonts/HouseHolidaySansCyrillic.woff2') format('woff2'),
+                 url('fonts/HouseHolidaySansCyrillic.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        
         .episode-btn {
             width: 50px;
             height: 30px;
@@ -43,32 +45,44 @@
             background: #6c63ff;
         }
         
-        /* Стиль для скрытых плееров */
-        .hidden {
-            display: none;
-        }
-        /* Фиксированный размер плеера */
+        /* Стили для видео-плеера */
         .video-player {
             width: 100%;
-            max-width: 800px; /* Можно регулировать */
+            max-width: 800px;
             margin: 0 auto;
+            position: relative;
         }
         
-        #mainPlayer {
-            width: 100%;
-            height: auto;
-            background: #000;
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 соотношение */
+            height: 0;
+            overflow: hidden;
         }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .video-error {
+            color: #ff6b6b;
+            padding: 15px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 5px;
+            display: none;
+            margin-top: 10px;
+        }
+        
         .logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo-image {
-    height: 10px;
-    width: auto;
-}
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
     </style>
 </head>
 
@@ -137,73 +151,89 @@
                 </div>
             </div>
             
-            <!-- Плеер и информация -->
             <div class="player-section">
-                <h2 class="section-title">ПЛЕЕР</h2>
-                <div class="video-player">
-                    <div id="youtubePlayerContainer">
-                        <iframe id="youtubePlayer" 
-                                frameborder="0"
-                                allowfullscreen
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture">
-                        </iframe>
-                    </div>
+                <h2>ПЛЕЕР</h2>
+                <div class="video-container">
+                    <!-- Изменено: теперь используем Google Drive плеер -->
+                    <iframe id="googleDrivePlayer"
+                            src=""
+                            allow="autoplay; fullscreen"
+                            allowfullscreen>
+                    </iframe>
                 </div>
+                <div id="videoError" class="video-error"></div>
                 
-                <!-- Список серий -->
-                <div class="episodes-list" id="episodesContainer">
-                    <!-- Будет заполнено JavaScript -->
-                </div>
+                <div class="episodes-list" id="episodesContainer"></div>
             </div>
         </div>
     </div>
 
     <script>
-        // Данные о сериях (замените youtubeId на реальные ID видео)
+        // Данные о сериях с ID файлов на Google Диске
         const episodesData = [
-            { id: 1, youtubeId: "https://youtu.be/HGJyuR32jHY9WgXcQ" },
-            { id: 2, youtubeId: "dQw4w9WgXcQ" },
-            { id: 3, youtubeId: "dQw4w9WgXcQ" },
-            { id: 4, youtubeId: "dQw4w9WgXcQ" },
-            { id: 5, youtubeId: "dQw4w9WgXcQ" },
-            { id: 6, youtubeId: "dQw4w9WgXcQ" },
-            { id: 7, youtubeId: "dQw4w9WgXcQ" },
-            { id: 8, youtubeId: "dQw4w9WgXcQ" },
-            { id: 9, youtubeId: "dQw4w9WgXcQ" },
-            { id: 10, youtubeId: "dQw4w9WgXcQ" },
-            { id: 11, youtubeId: "dQw4w9WgXcQ" },
-            { id: 12, youtubeId: "dQw4w9WgXcQ" }
+            { 
+                id: 1, 
+                driveId: "1-m0BeHHzFFsiLt3Q_bj7Fo0yeCJdL3D3", // Замените на реальный ID файла
+                name: "Серия 1" 
+            },
+            { 
+                id: 2, 
+                driveId: "1EXAMPLEFILEID2", // Замените на реальный ID файла
+                name: "Серия 2" 
+            },
+            { 
+                id: 3, 
+                driveId: "1EXAMPLEFILEID3", // Замените на реальный ID файла
+                name: "Серия 3" 
+            }
         ];
 
         document.addEventListener('DOMContentLoaded', function() {
+            const player = document.getElementById('googleDrivePlayer');
             const episodesContainer = document.getElementById('episodesContainer');
-            const youtubePlayer = document.getElementById('youtubePlayer');
-            
-            // Создаем кнопки серий
+            const errorDisplay = document.getElementById('videoError');
+
+            // Создаем кнопки для каждой серии
             episodesData.forEach(episode => {
                 const btn = document.createElement('button');
                 btn.className = 'episode-btn';
                 btn.textContent = episode.id;
-                btn.dataset.episode = episode.id;
                 
-                btn.addEventListener('click', function() {
-                    // Удаляем активный класс у всех кнопок
+                btn.addEventListener('click', () => {
+                    // Убираем активный класс у всех кнопок
                     document.querySelectorAll('.episode-btn').forEach(b => {
                         b.classList.remove('active');
                     });
+                    
                     // Добавляем активный класс текущей кнопке
-                    this.classList.add('active');
-                    // Загружаем видео
-                    youtubePlayer.src = `https://www.youtube.com/embed/${episode.youtubeId}?autoplay=1`;
+                    btn.classList.add('active');
+                    
+                    // Загружаем видео с Google Диска
+                    loadGoogleDriveVideo(episode.driveId);
                 });
                 
                 episodesContainer.appendChild(btn);
             });
-            
-            // Автоматически загружаем первую серию
+
+            // Функция загрузки видео с Google Диска
+            function loadGoogleDriveVideo(fileId) {
+                errorDisplay.style.display = 'none';
+                
+                // Формируем URL для встраивания видео с Google Диска
+                const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
+                
+                player.src = embedUrl;
+                
+                // Обработчик ошибок
+                player.addEventListener('error', () => {
+                    errorDisplay.textContent = 'Ошибка загрузки видео. Проверьте доступ к файлу.';
+                    errorDisplay.style.display = 'block';
+                });
+            }
+
+            // Автозагрузка первой серии
             if (episodesData.length > 0) {
-                const firstBtn = episodesContainer.querySelector('.episode-btn');
-                if (firstBtn) firstBtn.click();
+                episodesContainer.querySelector('.episode-btn').click();
             }
         });
     </script>
