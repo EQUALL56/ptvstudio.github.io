@@ -53,6 +53,9 @@ header {
 .nav-menu {
     display: flex;
     gap: 20px;
+    font-size: 1.1em;
+    font-weight: 500;
+    padding: 5px 0;
 }
 
 .nav-menu a {
