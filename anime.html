@@ -223,54 +223,6 @@
             padding: 20px;
         }
         
-        /* Стили для системы рейтинга отзывов */
-        .review-rating {
-            margin-top: 15px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-top: 1px solid #444;
-            padding-top: 15px;
-        }
-        
-        .rating-text {
-            font-size: 0.9em;
-            color: #aaa;
-        }
-        
-        .rating-value {
-            font-weight: bold;
-            color: #6c63ff;
-        }
-        
-        .rate-up, .rate-down {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.3em;
-            padding: 5px 10px;
-            border-radius: 4px;
-            transition: all 0.2s;
-        }
-        
-        .rate-up {
-            color: #4CAF50;
-        }
-        
-        .rate-down {
-            color: #F44336;
-        }
-        
-        .rate-up:hover {
-            background: rgba(76, 175, 80, 0.1);
-            transform: scale(1.1);
-        }
-        
-        .rate-down:hover {
-            background: rgba(244, 67, 54, 0.1);
-            transform: scale(1.1);
-        }
-        
         /* Анимация для нового отзыва */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -291,6 +243,13 @@
             font-size: 0.8em;
             margin-left: 10px;
             vertical-align: middle;
+        }
+        
+        /* Стили для загрузки */
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #6c63ff;
         }
     </style>
 </head>
@@ -363,7 +322,6 @@
             <div class="player-section">
                 <h2 class="player_text">ПЛЕЕР</h2>
                 <div class="video-container">
-                    <!-- Изменено: теперь используем Google Drive плеер -->
                     <iframe id="googleDrivePlayer"
                             src=""
                             allow="autoplay; fullscreen"
@@ -397,8 +355,7 @@
             
             <!-- Список отзывов -->
             <div class="comments-list" id="commentsList">
-                <!-- Отзывы будут загружаться здесь -->
-                <p class="no-comments">Пока нет отзывов. Будьте первым!</p>
+                <div class="loading">Загрузка отзывов...</div>
             </div>
         </div>
     </div>
@@ -408,316 +365,202 @@
         const episodesData = [
             { 
                 id: 1, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
                 name: "Серия 1" 
             },
             { 
                 id: 2, 
-                driveId: "1EXAMPLEFILEID2", // Замените на реальный ID файла
+                driveId: "1EXAMPLEFILEID2",
                 name: "Серия 2" 
             },
             { 
                 id: 3, 
-                driveId: "1EXAMPLEFILEID3", // Замените на реальный ID файла
+                driveId: "1EXAMPLEFILEID3",
                 name: "Серия 3" 
             },
             { 
                 id: 4, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
-                name: "Серия 1" 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
+                name: "Серия 4" 
             },
             { 
                 id: 5, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
-                name: "Серия 1" 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
+                name: "Серия 5" 
             },
             { 
                 id: 6, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
-                name: "Серия 1" 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
+                name: "Серия 6" 
             },
             { 
                 id: 7, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
-                name: "Серия 1" 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
+                name: "Серия 7" 
             },
             { 
                 id: 8, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
-                name: "Серия 1" 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
+                name: "Серия 8" 
             },
             { 
                 id: 9, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
-                name: "Серия 1" 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
+                name: "Серия 9" 
             },
             { 
                 id: 10, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
-                name: "Серия 1" 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
+                name: "Серия 10" 
             },
             { 
                 id: 11, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
-                name: "Серия 1" 
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
+                name: "Серия 11" 
             },
             { 
                 id: 12, 
-                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD", // Замените на реальный ID файла
-                name: "Серия 1" 
-            },
+                driveId: "1HwE7NdzCpo_lQQ8FqjTzDDrMW9cO2ASD",
+                name: "Серия 12" 
+            }
         ];
+
+        // URL вашего Google Apps Script веб-приложения
+        const API_URL = "https://script.google.com/macros/s/AKfycby0ssgkTI-KW5WI-o1wTtGG-gOvbZVM0xAsn9_9kn0Zm588xZTG8KtDNAAM3P_CqCln/exec";
 
         document.addEventListener('DOMContentLoaded', function() {
             const player = document.getElementById('googleDrivePlayer');
             const episodesContainer = document.getElementById('episodesContainer');
             const errorDisplay = document.getElementById('videoError');
-            
-            // Элементы для работы с отзывами
             const commentForm = document.getElementById('commentForm');
             const commentsList = document.getElementById('commentsList');
-            const commentName = document.getElementById('commentName');
-            const commentText = document.getElementById('commentText');
             const reviewsCounter = document.getElementById('reviewsCounter');
 
-            // Создаем кнопки для каждой серии
-            episodesData.forEach(episode => {
-                const btn = document.createElement('button');
-                btn.className = 'episode-btn';
-                btn.textContent = episode.id;
-                
-                btn.addEventListener('click', () => {
-                    // Убираем активный класс у всех кнопок
-                    document.querySelectorAll('.episode-btn').forEach(b => {
-                        b.classList.remove('active');
+            // Инициализация плеера
+            function initPlayer() {
+                episodesData.forEach(episode => {
+                    const btn = document.createElement('button');
+                    btn.className = 'episode-btn';
+                    btn.textContent = episode.id;
+                    
+                    btn.addEventListener('click', () => {
+                        document.querySelectorAll('.episode-btn').forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+                        loadGoogleDriveVideo(episode.driveId);
                     });
                     
-                    // Добавляем активный класс текущей кнопке
-                    btn.classList.add('active');
-                    
-                    // Загружаем видео с Google Диска
-                    loadGoogleDriveVideo(episode.driveId);
+                    episodesContainer.appendChild(btn);
                 });
-                
-                episodesContainer.appendChild(btn);
-            });
 
-            // Функция загрузки видео с Google Диска
+                if (episodesData.length > 0) {
+                    episodesContainer.querySelector('.episode-btn').click();
+                }
+            }
+
             function loadGoogleDriveVideo(fileId) {
                 errorDisplay.style.display = 'none';
-                
-                // Формируем URL для встраивания видео с Google Диска
                 const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-                
                 player.src = embedUrl;
                 
-                // Обработчик ошибок
                 player.addEventListener('error', () => {
                     errorDisplay.textContent = 'Ошибка загрузки видео. Проверьте доступ к файлу.';
                     errorDisplay.style.display = 'block';
                 });
             }
 
-            // Автозагрузка первой серии
-            if (episodesData.length > 0) {
-                episodesContainer.querySelector('.episode-btn').click();
-            }
-            
             // Работа с отзывами
-            
-            // Загрузка отзывов при загрузке страницы
-            loadReviews();
-            
-            // Обработчик отправки формы отзыва
-            commentForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const name = commentName.value.trim();
-                const text = commentText.value.trim();
-                
-                if (name && text) {
-                    addReview(name, text);
+            async function loadReviews() {
+                try {
+                    commentsList.innerHTML = '<div class="loading">Загрузка отзывов...</div>';
                     
-                    // Очищаем поля формы
-                    commentName.value = '';
-                    commentText.value = '';
-                }
-            });
-            
-            // Функция добавления отзыва
-            function addReview(name, text) {
-                const review = {
-                    id: Date.now(), // Используем timestamp как уникальный ID
-                    name: name,
-                    text: text,
-                    date: new Date().toLocaleString('ru-RU', {
-                        day: 'numeric',
-                        month: 'numeric',
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    }),
-                    rating: 0,
-                    likedBy: [],    // Кто поставил лайк
-                    dislikedBy: []  // Кто поставил дизлайк
-                };
-                
-                // Получаем текущие отзывы из localStorage
-                let reviews = JSON.parse(localStorage.getItem('animeReviews')) || [];
-                
-                // Добавляем новый отзыв
-                reviews.unshift(review); // Добавляем в начало массива
-                
-                // Сохраняем обратно в localStorage
-                localStorage.setItem('animeReviews', JSON.stringify(reviews));
-                
-                // Обновляем отображение отзывов
-                loadReviews();
-                
-                // Показываем анимацию для нового отзыва
-                if (commentsList.firstChild) {
-                    commentsList.firstChild.classList.add('new-comment');
-                    setTimeout(() => {
-                        commentsList.firstChild.classList.remove('new-comment');
-                    }, 500);
-                }
-            }
-            
-            // Функция загрузки отзывов
-            function loadReviews() {
-                const reviews = JSON.parse(localStorage.getItem('animeReviews')) || [];
-                
-                // Обновляем счетчик отзывов
-                reviewsCounter.textContent = reviews.length;
-                
-                // Очищаем список отзывов
-                commentsList.innerHTML = '';
-                
-                if (reviews.length === 0) {
-                    // Если отзывов нет, показываем сообщение
-                    const noReviews = document.createElement('p');
-                    noReviews.className = 'no-comments';
-                    noReviews.textContent = 'Пока нет отзывов. Будьте первым!';
-                    commentsList.appendChild(noReviews);
-                } else {
-                    // Добавляем каждый отзыв в список
+                    const response = await fetch(API_URL);
+                    const reviews = await response.json();
+                    
+                    commentsList.innerHTML = '';
+                    reviewsCounter.textContent = reviews.length;
+                    
+                    if (reviews.length === 0) {
+                        commentsList.innerHTML = '<p class="no-comments">Пока нет отзывов. Будьте первым!</p>';
+                        return;
+                    }
+                    
                     reviews.forEach(review => {
+                        const reviewDate = new Date(review.Дата || review.date);
+                        const formattedDate = reviewDate.toLocaleString('ru-RU', {
+                            day: 'numeric',
+                            month: 'numeric',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        
                         const reviewElement = document.createElement('div');
                         reviewElement.className = 'comment';
-                        reviewElement.dataset.id = review.id;
                         
-                        const reviewHeader = document.createElement('div');
-                        reviewHeader.className = 'comment-header';
-                        
-                        const authorSpan = document.createElement('span');
-                        authorSpan.className = 'comment-author';
-                        authorSpan.textContent = review.name;
-                        
-                        const dateSpan = document.createElement('span');
-                        dateSpan.className = 'comment-date';
-                        dateSpan.textContent = review.date;
-                        
-                        reviewHeader.appendChild(authorSpan);
-                        reviewHeader.appendChild(dateSpan);
-                        
-                        const reviewText = document.createElement('div');
-                        reviewText.className = 'comment-text';
-                        reviewText.textContent = review.text;
-                        
-                        // Добавляем систему рейтинга
-                        const ratingContainer = document.createElement('div');
-                        ratingContainer.className = 'review-rating';
-                        ratingContainer.innerHTML = `
-                            <span class="rating-text">Полезность: <span class="rating-value">${review.rating}</span></span>
-                            <button class="rate-up">👍 ${review.likedBy ? review.likedBy.length : 0}</button>
-                            <button class="rate-down">👎 ${review.dislikedBy ? review.dislikedBy.length : 0}</button>
+                        reviewElement.innerHTML = `
+                            <div class="comment-header">
+                                <span class="comment-author">${review.Имя || review.name}</span>
+                                <span class="comment-date">${formattedDate}</span>
+                            </div>
+                            <div class="comment-text">${review['Текст отзыва'] || review.text}</div>
                         `;
-                        
-                        reviewElement.appendChild(reviewHeader);
-                        reviewElement.appendChild(reviewText);
-                        reviewElement.appendChild(ratingContainer);
                         
                         commentsList.appendChild(reviewElement);
                     });
-                    
-                    // Добавляем обработчики для кнопок рейтинга
-                    document.querySelectorAll('.rate-up').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const reviewId = parseInt(this.closest('.comment').dataset.id);
-                            updateReviewRating(reviewId, 1);
-                        });
-                    });
-                    
-                    document.querySelectorAll('.rate-down').forEach(btn => {
-                        btn.addEventListener('click', function() {
-                            const reviewId = parseInt(this.closest('.comment').dataset.id);
-                            updateReviewRating(reviewId, -1);
-                        });
-                    });
+                } catch (error) {
+                    console.error('Ошибка загрузки отзывов:', error);
+                    commentsList.innerHTML = '<p class="no-comments">Ошибка загрузки отзывов. Попробуйте позже.</p>';
                 }
             }
-            
-            // Функция обновления рейтинга отзыва
-            function updateReviewRating(reviewId, change) {
-                let reviews = JSON.parse(localStorage.getItem('animeReviews')) || [];
-                const userId = getUserId(); // Получаем уникальный ID пользователя
-                
-                reviews = reviews.map(review => {
-                    if (review.id === reviewId) {
-                        // Проверяем, не голосовал ли уже пользователь
-                        const alreadyLiked = review.likedBy.includes(userId);
-                        const alreadyDisliked = review.dislikedBy.includes(userId);
-                        
-                        if (change > 0) { // Лайк
-                            if (alreadyLiked) {
-                                // Убираем лайк
-                                review.rating -= 1;
-                                review.likedBy = review.likedBy.filter(id => id !== userId);
-                            } else {
-                                // Добавляем лайк
-                                review.rating += 1;
-                                review.likedBy.push(userId);
-                                
-                                // Убираем дизлайк, если был
-                                if (alreadyDisliked) {
-                                    review.rating += 1;
-                                    review.dislikedBy = review.dislikedBy.filter(id => id !== userId);
-                                }
-                            }
-                        } else { // Дизлайк
-                            if (alreadyDisliked) {
-                                // Убираем дизлайк
-                                review.rating += 1;
-                                review.dislikedBy = review.dislikedBy.filter(id => id !== userId);
-                            } else {
-                                // Добавляем дизлайк
-                                review.rating -= 1;
-                                review.dislikedBy.push(userId);
-                                
-                                // Убираем лайк, если был
-                                if (alreadyLiked) {
-                                    review.rating -= 1;
-                                    review.likedBy = review.likedBy.filter(id => id !== userId);
-                                }
-                            }
-                        }
+
+            async function addReview(name, text) {
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            name: name,
+                            text: text,
+                            anime_id: "grand_blue"
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        loadReviews();
+                        return true;
                     }
-                    return review;
-                });
-                
-                localStorage.setItem('animeReviews', JSON.stringify(reviews));
-                loadReviews();
-            }
-            
-            // Генерация уникального ID пользователя (хранится в localStorage)
-            function getUserId() {
-                let userId = localStorage.getItem('userId');
-                if (!userId) {
-                    userId = 'user_' + Math.random().toString(36).substr(2, 9);
-                    localStorage.setItem('userId', userId);
+                } catch (error) {
+                    console.error('Ошибка отправки отзыва:', error);
                 }
-                return userId;
+                return false;
             }
+
+            // Инициализация
+            initPlayer();
+            loadReviews();
+            
+            commentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const name = document.getElementById('commentName').value.trim();
+                const text = document.getElementById('commentText').value.trim();
+                
+                if (name && text) {
+                    const success = await addReview(name, text);
+                    if (success) {
+                        document.getElementById('commentForm').reset();
+                        
+                        // Анимация добавления нового отзыва
+                        if (commentsList.firstChild) {
+                            commentsList.firstChild.classList.add('new-comment');
+                            setTimeout(() => {
+                                commentsList.firstChild.classList.remove('new-comment');
+                            }, 500);
+                        }
+                    } else {
+                        alert('Ошибка при отправке отзыва');
+                    }
+                }
+            });
         });
     </script>
 </body>
